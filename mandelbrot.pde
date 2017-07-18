@@ -1,9 +1,27 @@
+/*
+Written by Brett Benda in 2017
+
+To draw a Mandelbrot Set replace:
+<iterations> with an int
+and place the line before the end of the draw function
+
+drawMandelbrot(zoom,xDisplacement,yDisplacement, <iterations>);
+
+To draw a Mandelbrot Set replace:
+<iterations> with an int
+*realPart* with a float
+^imaginaryPart^ with a float
+and place the line before the end of the draw function
+
+drawJulia(zoom,xDisplacement,yDisplacement, <iterations>,*realPart*,^imaginaryPart^);
+*/
+
 import java.lang.Math;
 
 int imageNum = 1;
 double zoom = 4;
-double xDisplacement = -0.1731916753239213;
-double yDisplacement = 0.1654150772815459;
+double xDisplacement = 0;
+double yDisplacement = 0;
 boolean isMoving = false;
 double savedXDis;//xDisplacement at start of movement
 double savedYDis;//yDisplacement at start of movement
@@ -22,20 +40,9 @@ void setup() {
 void draw() {
   background(255);
   updateZoomAndTranslation();
-  drawJulia(zoom, xDisplacement, yDisplacement, 100);
-  /*
-  zoom*=0.99;
-  save("julia"+nf(imageNum,6)+".png");
-  imageNum++;
-  */
+  drawJulia(zoom, xDisplacement, yDisplacement, 100, -0.12, 1.25);
 }
 
-
-void keyPressed(){
- if(key=='p'){
-  save("mandel.png"); 
- }
-}
 void mousePressed() {
   println("X:" + xDisplacement);
   println("Y:" + yDisplacement);
@@ -139,7 +146,7 @@ void drawMandelbrot(double xAxisLength, double xDisplacement, double yDisplaceme
   updatePixels();
 }
 
-void drawJulia(double xAxisLength, double xDisplacement, double yDisplacement, int iterations) {
+void drawJulia(double xAxisLength, double xDisplacement, double yDisplacement, int iterations, float realPart, float imaginaryPart) {
   //load pixels so we can modify them
   loadPixels();
 
@@ -147,8 +154,9 @@ void drawJulia(double xAxisLength, double xDisplacement, double yDisplacement, i
   colorMode(HSB);
 
   //constants
-  double realPart = -0.8;
-  double imaginaryPart = 0.156;
+  /*
+  -------CHANGE THE TWO DOUBLES BELOW FOR DIFFERENT JULIA SETS----------
+  */
 
   //we want the y-axis to be proportional to the x-axis
   double yAxisHeight = (xAxisLength * height)/(width);
